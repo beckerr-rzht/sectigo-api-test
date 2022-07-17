@@ -1,0 +1,15 @@
+# Sample configuration for do.sh
+# 
+org_id=28420
+customer=DFN
+cert_type="GÉANT Personal Certificate"
+
+admin_user='<ADMIN-USERNAME>'
+admin_pass='<ADMIN-PASSWORD>'
+admin_api_pass='<ADMIN-API-PASSWORD>'
+pass='<TEST-KEY-PASSWORD>'
+
+firstName="Juergen"
+lastName="Test"
+commonName="Dr. Juergen Test"
+emails=( rfttest@hochschule-trier.de rfttest@rz.hochschule-trier.de J.TEST@rz.fh-trier.de rfttest@rz.fh-trier.de rfttest@fh-trier.de )
