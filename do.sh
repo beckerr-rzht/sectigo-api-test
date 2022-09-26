@@ -46,11 +46,11 @@ create-csr)	#-- Create csr
 
 	export commonName email
 	envsubst '$commonName,$email' <conf/smime.cnf >"$cnf"
-	tac -s " " <<<"${emails[@]}" | awk '{$0="email."(NR-1)"="$0}1' >>"$cnf"
+	awk '{$0="email."(NR-1)"="$0}1' >>"$cnf" <<<"${emails[@]}"
 	openssl req -config "$cnf" -new -key "$key" -passin "pass:$pass" -out "$csr" 
 
 	echo
-	echo "* Result: (emails in reverse order)"
+	echo "* Result:"
 	openssl req -in "$csr" -noout -text | grep -E "(Subject|email:)"
 	echo
 	;;
@@ -61,7 +61,9 @@ test-api) #-- Test Sectigo API
 	csr_emails=( $(openssl req -in "$csr" -noout -text | grep-alt-emails) )
 
 	# Last mail address is primary address!
-	csr_email=${csr_emails[-1]}
+	#csr_email=${csr_emails[-1]}
+	# First mail address is primary address!
+	csr_email=${csr_emails[0]}
 	
 	echo "* E-Mail:"
 	echo "  $email"
@@ -73,7 +75,7 @@ test-api) #-- Test Sectigo API
 	echo "  $csr_email"
 	echo
 	echo "* E-Mails from request:"
-	echo "  ${csr_emails[@]} (wanted list in reverse order)"
+	echo "  ${csr_emails[@]}"
 	echo 
 
 	cert_types=$(curl "https://cert-manager.com/api/smime/v1/types?organizationId=$org_id" -s -X GET \
@@ -90,8 +92,7 @@ test-api) #-- Test Sectigo API
 
 	# Request input:
 	# email is mandatory and overwrite subject alt names listed in csr.
-	# As aresult secondaryEmails are also mandary, to fill subject alt names.
-	# Secigo support suggested to use list of email is reverse order.
+	# As a result secondaryEmails are also mandary, to fill subject alt names.
 	request="$(jo -- \
 			-n orgId="$org_id" \
 			-s firstName="$firstName" \
@@ -149,7 +150,7 @@ print-result)	#-- Print result of last api test
 	echo "  $p7b"
 	echo
 	echo "  Wanted: ${emails[@]}"
-	echo "  CSR:    ${csr_emails[@]} (upper in reverse order)"
+	echo "  CSR:    ${csr_emails[@]}"
 	echo "  P7B:    ${p7b_emails[@]}"
 	;;
 
@@ -160,6 +161,20 @@ print-p7b)	#-- Print content of last p7b
 	echo "  $p7b"
 	echo
 	openssl pkcs7 -inform PEM -outform PEM -in "$p7b" -print_certs | openssl x509 -text -noout | less
+	;;
+
+convert-pfx)	#-- Convert p7b to pfx
+	p7b=$(ls -1 "$prefix/data/$email"-*.p7b | tail -1)
+	p12="${p7b%.p7b}.p12"
+	cer="${p7b%.p7b}.cer"
+	key="${p7b%-*}.key"
+	cacert="${p7b%.p7b}-cacert.cer"
+	echo "* P12 file:"
+	echo "  $p12"
+	echo
+	openssl pkcs7 -inform PEM -outform PEM -in "$p7b" -print_certs -out "$cer"
+	awk -F= '$1=="subject"{i++}i>1' "$cer" >"$cacert"
+	openssl pkcs12 -export -in "$cer" -inkey "$key" -out "$p12" -certfile "$cacert" -passin "pass:$pass" -passout "pass:$pass"
 	;;
 
 *)
