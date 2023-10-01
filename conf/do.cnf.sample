@@ -2,11 +2,10 @@
 # 
 org_id=28420
 customer=DFN
-cert_type="GÉANT Personal Certificate"
+cert_type="GÉANT Personal email signing and encryption"
 
 admin_user='<ADMIN-USERNAME>'
 admin_pass='<ADMIN-PASSWORD>'
-admin_api_pass='<ADMIN-API-PASSWORD>'
 pass='<TEST-KEY-PASSWORD>'
 
 firstName="Juergen"

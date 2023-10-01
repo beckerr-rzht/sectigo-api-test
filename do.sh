@@ -90,7 +90,67 @@ test-api) #-- Test Sectigo API
 	echo "  $cert_type_id = $cert_type"
 	echo
 
-	# Request input:
+	# Person Request input:
+	request="$(jo -- \
+			-n organizationId="$org_id" \
+			-s firstName="$firstName" \
+			-s middleName="" \
+			-s lastName="$lastName" \
+			-s commonName="$commonName" \
+			-s validationType="HIGH" \
+			-s phone="" \
+			-s email="$csr_email" \
+			-s secondaryEmails=:<(jo -a -- "${csr_emails[@]}") \
+		)"
+
+	echo "* Person Request:"
+	jq . <<<"$request"
+	echo
+
+	echo "* Find Person by Email..."
+
+	response=$(curl "https://cert-manager.com/api/person/v1/id/byEmail/$csr_email" -s -X GET \
+	    -H "Content-Type: application/json;charset=utf-8" \
+	    -H "customerUri: $customer" \
+	    -H "login: $admin_user" \
+	    -H "password: $admin_pass")
+
+	echo "Response:"
+	jq . <<<"$response"
+	personId=$(jq .personId <<<"$response")
+	echo
+
+	if [ -z "$personId" ]; then
+
+		echo "* Creating Person..."
+
+		response=$(curl 'https://cert-manager.com/api/person/v1' -sv -X POST \
+		    -H "Content-Type: application/json;charset=utf-8" \
+		    -H "customerUri: $customer" \
+		    -H "login: $admin_user" \
+		    -H "password: $admin_pass" \
+			-d "$request")
+
+		echo "Response:"
+		grep -F '> Location' <<<"$response"
+		echo
+
+	else
+		echo "* Updating Person $personId ..."
+
+		response=$(curl "https://cert-manager.com/api/person/v1/$personId" -s -X PUT \
+		    -H "Content-Type: application/json;charset=utf-8" \
+		    -H "customerUri: $customer" \
+		    -H "login: $admin_user" \
+		    -H "password: $admin_pass" \
+			-d "$request" && echo OK)
+
+		echo "Response:"
+		cat <<<"$response" 
+		echo
+	fi
+
+	# Enroll Request input:
 	# email is mandatory and overwrite subject alt names listed in csr.
 	# As a result secondaryEmails are also mandary, to fill subject alt names.
 	request="$(jo -- \
@@ -104,10 +164,10 @@ test-api) #-- Test Sectigo API
 			-n term=365 \
 			-s eppn="" \
 			-s email="$csr_email" \
-			-s secondaryEmails="$(jo -a -- "${csr_emails[@]}")" \
+			-s secondaryEmails=:<(jo -a -- "${csr_emails[@]}") \
 		)"
 	
-	echo "* Request:"
+	echo "* Enroll Request:"
 	jq . <<<"$request"
 	echo
 
@@ -133,11 +193,18 @@ test-api) #-- Test Sectigo API
 	echo
 
 	[ -z "$orderNumber" ] && die "no order number"
-	curl "https://cert-manager.com/api/smime/v1/collect/$orderNumber" -s -X GET \
-	    -H "customerUri: $customer" \
-	    -H "login: $admin_user" \
-	    -H "password: $admin_pass" \
-		> $p7b
+	for i in 0 1 2 3 4 5 6 ; do
+		curl "https://cert-manager.com/api/smime/v1/collect/$orderNumber" -s -X GET \
+		    -H "customerUri: $customer" \
+		    -H "login: $admin_user" \
+		    -H "password: $admin_pass" \
+			> "$p7b"
+			grep -qF '"code":-183' "$p7b" || break
+			echo "  $(cat "$p7b") ... next try in 10s"
+			sleep 10
+	done
+	cat "$p7b"
+
 	;&
 
 print-result)	#-- Print result of last api test
@@ -185,3 +252,4 @@ convert-pfx)	#-- Convert p7b to pfx
 
 esac
 
+# vim: ts=4:
