@@ -92,17 +92,46 @@ Output:
   rfttest@hochschule-trier.de rfttest@rz.hochschule-trier.de J.TEST@rz.fh-trier.de rfttest@rz.fh-trier.de rfttest@fh-trier.de
 
 * Cert-Type:
-  16307 = GÉANT Personal Certificate
+  21222 = GÉANT Personal email signing and encryption
 
-* Request:
+* Person Request:
+{
+  "organizationId": 28420,
+  "firstName": "Juergen",
+  "middleName": "",
+  "lastName": "Test",
+  "commonName": "Dr. Juergen Test",
+  "validationType": "HIGH",
+  "phone": "",
+  "email": "rfttest@hochschule-trier.de",
+  "secondaryEmails": [
+    "rfttest@hochschule-trier.de",
+    "rfttest@rz.hochschule-trier.de",
+    "J.TEST@rz.fh-trier.de",
+    "rfttest@rz.fh-trier.de",
+    "rfttest@fh-trier.de"
+  ]
+}
+
+* Find Person by Email...
+Response:
+{
+  "personId": 320542
+}
+
+* Updating Person 320542 ...
+Response:
+OK
+
+* Enroll Request:
 {
   "orgId": 28420,
   "firstName": "Juergen",
   "middleName": "",
   "lastName": "Test",
   "commonName": "Dr. Juergen Test",
-  "csr": "-----BEGIN CERTIFICATE REQUEST-----\nMIIFsjCCA5oCAQAwgc4xCzAJBgNVBAYTAkRFMUAwPgYDVQQKDDdIb2Noc2NodWxl\nIFRyaWVyIC0gVHJpZXIgVW5pdmVyc2l0eSBvZiBBcHBsaWVkIFNjaWVuY2VzMQ4w\nDAYDVQQHDAVUcmllcjEOMAwGA1UEEQwFNTQyOTMxFjAUBgNVBAkMDVNjaG5laWRl\ncnNob2YxGTAXBgNVBAMMEERyLiBKdWVyZ2VuIFRlc3QxKjAoBgkqhkiG9w0BCQEW\nG3JmdHRlc3RAaG9jaHNjaHVsZS10cmllci5kZTCCAiIwDQYJKoZIhvcNAQEBBQAD\nggIPADCCAgoCggIBAMQMI439s/UPqvWtWkPDj0XS9SVn3kkRcewVSqoR5hSPmuHn\nzcYxk0FJVB0erIsL2OSaWTtIoMMBstZa9PGWG6vYe8vVF4LxyXoIXmGQVaRCmIgY\nUtZ8bk7o/aoqnJV9zVPedGlWVUTthORVXbzyLPwE2Tjp6HUvF98LBOBaFazl8wXE\nlZ8fGfAYuduA8ZCo/tNN2+7NwnRFnpoNUg6S40nxwM7ZWRfOdFtginF1WlJdieEZ\nogxuYxKb8CQAopog13OtE/XA7+Igdhf50VxCJG84LwRB4GCutdLpk68aYrCyb3sP\nhi4oqLPCCfMLchXaNXjGEs9dMfVyhbIslM5anxYHMqEboyUHwT79VNx+P5HTqMM8\nxcFm+MPzKudlqY8L1NGkEkm9UerNw+QZzvv/Av5BKypTqMjdcB7M34F6g07nFLxu\nOUVzSjOkFwh7HYmPnAL3qTaqeNmDCk3xwtkNZ/oThhSFT5s1a0PX0SHDWXJ1US9v\niGsmYKw/0Pa0JHRKgZF7Q4RPLkUsZsy09lovjTnr5V0lKa/NbydDWaLMwJBQBQY7\n5lHrXtJbsaPqorXfFsEX3Tn1ioUo54evq7D/AFHM1yBExzYuGOFjK1z7Sn1HpOU3\naZZoSb7stjXVNSjX9arqFzMCzBq2wvqViIkoT0wEg/BhHFSr5wQN5D0xRb/bAgMB\nAAGggZ0wgZoGCSqGSIb3DQEJDjGBjDCBiTCBhgYDVR0RBH8wfYF7cmZ0dGVzdEBo\nb2Noc2NodWxlLXRyaWVyLmRlIHJmdHRlc3RAcnouaG9jaHNjaHVsZS10cmllci5k\nZSBKLlRFU1RAcnouZmgtdHJpZXIuZGUgcmZ0dGVzdEByei5maC10cmllci5kZSBy\nZnR0ZXN0QGZoLXRyaWVyLmRlMA0GCSqGSIb3DQEBCwUAA4ICAQA2FCQBQdS67NTG\nMuOmcgKuyyynOpg+Vv8b06AoYz0qnFTj5rdn1LgA0XXuMGDvlBvmWdwl5ewk0Lyf\nFCmdzBs4SruagV7ij7fGmTh00LhW06OTI0n1PWy1fNRwVVaVHKax3JSNQINNsrwv\nIiGPHgS1o+OFu+f1wQOrRQeyrldd/bOSAqvkrCzGoVPdcuP89eWXa3QK4jut0hvT\nIz5nhfpO6aH9eDU5VJwkx6QKpfTquw0hPGdaBtzSzjL8nA2bQXDRRN8kkU6QjUmM\nq1RBKz8mExehEGpfVujRvkp0VeHwnrK8NjORugIKQftPwq9dbmEkTZ44H5A4uoGt\nyyrcasAO901nCVLQQilW2SFC9rNkKdGfwAQTum+Jfbh9VGW4B6cHNWcbVZQtrDAE\n6M7tl9A3wfITq6mThICT3PL5vDmJU6zz/Mn+J04prj8uJ7wPTljtskQu6o4Osu9m\nAPgzH1Kyb/8KDh6vKzsGcdzBCXcOnqyVjAiIl05HqTXSy/AMDRkbtFIJB+Ias+r3\nnetpgYQHdwZiE6nrRiRMpuLaapLgdLF0VXQbHeQzuN9aeOXuvUI8v4zIWCVu2DGY\nNPrJAULQX59eXY4BT7FU21hrz9VIZFgz3txG4UFh0T59fuUdCP0qTHM97dAgBoeK\nxGZ4UBJvXHjee9JsZP+qFxWESMgNtA==\n-----END CERTIFICATE REQUEST-----",
-  "certType": 16307,
+  "csr": "-----BEGIN CERTIFICATE REQUEST-----\nMIIFsjCCA5oCAQAwgc4xCzAJBgNVBAYTAkRFMUAwPgYDVQQKDDdIb2Noc2NodWxl\nIFRyaWVyIC0gVHJpZXIgVW5pdmVyc2l0eSBvZiBBcHBsaWVkIFNjaWVuY2VzMQ4w\nDAYDVQQHDAVUcmllcjEOMAwGA1UEEQwFNTQyOTMxFjAUBgNVBAkMDVNjaG5laWRl\ncnNob2YxGTAXBgNVBAMMEERyLiBKdWVyZ2VuIFRlc3QxKjAoBgkqhkiG9w0BCQEW\nG3JmdHRlc3RAaG9jaHNjaHVsZS10cmllci5kZTCCAiIwDQYJKoZIhvcNAQEBBQAD\nggIPADCCAgoCggIBAK423YscNpKfhh0m55DaLh0vKKTxaoTILLlYPPfxxiYz+Ms1\nhwA87iqpTdJvW+66cFBjJ02fj2G+gLuL+3Gd3uwOZrggVIjeEnn7WCwZjHAKcW5h\nkedyAd/uFMWz7hZsdKSP/gRKg3Gf8yOK+K83Ywatwcm0ntWFJqxNWvzcPU83jX7A\n+YYJIuVAG3xhQ6nbSQDLmSu9DhjAej81CNID7B7aSZs0MWJyzL7XxPqcniFgxfnp\nS6juxh4vGPk9EH3HcgTaWXie0OeDTWDryfImnh5Cw8XDHNExa/DqFZcoHjkfI7HH\nTYfGqItLTL5XmytdjBVxos8DrztGyQPrWl8XtNa0rIZ0497RMLETubBfD0bd0JhG\n1rtS7AsUu2GLftTRJgKua2YRuoksWSNd6TIgSVMTt+Iu7eUpCZojS+5Xdhkdd5AC\nflbpMcdCu8hwmwbf3eAIK7KfzRbGfMfzRwsJuW18Rl4TadyClm0lkmq3cZF7nWXe\nLTcfySQwpKihisscxHIJEzJQ0xHiflXNUNCUmVedLO2tmuDmQCngZRV5FHs0PQ2h\nwle4621w90cum0MgrpRoPGgPKHGkScIug0JJ2PuahyNI+Eh8gWUpGgm/btRpJlWr\nv5MYqnISMYKmYFwWzCoAPfmKJbvJTmzdfEhtVCG6Ps++QVAL0PcV4mzB1shRAgMB\nAAGggZ0wgZoGCSqGSIb3DQEJDjGBjDCBiTCBhgYDVR0RBH8wfYF7cmZ0dGVzdEBo\nb2Noc2NodWxlLXRyaWVyLmRlIHJmdHRlc3RAcnouaG9jaHNjaHVsZS10cmllci5k\nZSBKLlRFU1RAcnouZmgtdHJpZXIuZGUgcmZ0dGVzdEByei5maC10cmllci5kZSBy\nZnR0ZXN0QGZoLXRyaWVyLmRlMA0GCSqGSIb3DQEBCwUAA4ICAQBQDTUd/T85kQW/\nBLhKk7k0cwu6uMo40FWW6tXe2VDIv15OqtyZ87VVpotNwBaliEGpUwOmX0J1WXrX\noIvRwpLEkJfRAyJRxeM0KtA3ZuE6H/GzYjN+j6I706W+2KPiqs6yUc5gNP1cgzed\nL02DCRilPWExmF/MbAbGJohIodmNW/k5fJuTHy9s0TySRWwTtlj6ctu4GdUdFm1s\nw6pBNt4LmPPgB/lktSJMnpYU0gLAG/Orkc2+nWTy0obj0hshbCJ7uUczIC6OdaCN\naTk7eiNoLfrkgCOg+svEfhRdM6PbIzJ+3kxgYx4TlEDrb7e9ahOHvekaX1mzIpR9\nWZu/GF/BCProoYFw2jStmSd88KtrMxf6hZ/JOnxIW2Yu5Q12KGYh1TKSM4om4Nhg\nTpGMMEGIkbMT+9k8CQAC7CC6/egOHHylJB4WIY0oUUs8a9ngENw0p/XaYaGMbgVN\nUXnIrTwKgoX8sAwl6WrOkHTDatiy36VbC2CNsZAxNXaNJStsQsj6civey/hsGzma\nxJncUduACRiF8ItDPohG6k53r8EbcZ2RnwU1Q82thCwxp2eJONnXR0dVORWGVM0D\n06S9fpu5EralISjjmGAQEvKMKVrfcQmShLTwHX+ASA5ySY5VLeHC8kvKwO8skiEx\n/eKx30W74VhO83WxYBO11IVdm1xHyw==\n-----END CERTIFICATE REQUEST-----",
+  "certType": 21222,
   "term": 365,
   "eppn": "",
   "email": "rfttest@hochschule-trier.de",
@@ -117,21 +146,33 @@ Output:
 
 Response:
 {
-  "orderNumber": 1170803656,
-  "backendCertId": "1170803656"
+  "orderNumber": 1923182777,
+  "backendCertId": "1923182777"
 }
 
 * Returned orderNumber:
-  1170803656
+  1923182777
 
 * Downloading p7b file:
-  ./data/rfttest@hochschule-trier.de-20220926155843.p7b
+  ./data/rfttest@hochschule-trier.de-20231031075259.p7b
 
+  {"code":-183,"description":"Certificate is not collectable."} ... next try in 10s
+  {"code":-183,"description":"Certificate is not collectable."} ... next try in 10s
+  {"code":-183,"description":"Certificate is not collectable."} ... next try in 10s
+  {"code":-183,"description":"Certificate is not collectable."} ... next try in 10s
+-----BEGIN PKCS7-----
+MIIYpwYJKoZIhvcNAQcCoIIYmDCCGJQCAQExADALBgkqhkiG9w0BBwGgghh8MIIH
+0zCCBbugAwIBAgIQd5KdspH4axW7RfOc5IQAXDANBgkqhkiG9w0BAQwFADBGMQsw
+...
+Jqsil2D4kF501KKaU73yqWjgom7C12yxow+ev+to51byrvLjKzg6CYG1a4XXvi3t
+Pxq3smPi9WIsgtRqAEFQ8TmDn5XpNpaYbjEA
+-----END PKCS7-----
 * Compare e-mail addesses:
-  ./data/rfttest@hochschule-trier.de-20220926155843.p7b
+  ./data/rfttest@hochschule-trier.de-20231031075259.p7b
 
   Wanted: rfttest@hochschule-trier.de rfttest@rz.hochschule-trier.de J.TEST@rz.fh-trier.de rfttest@rz.fh-trier.de rfttest@fh-trier.de
   CSR:    rfttest@hochschule-trier.de rfttest@rz.hochschule-trier.de J.TEST@rz.fh-trier.de rfttest@rz.fh-trier.de rfttest@fh-trier.de
-  P7B:    rfttest@hochschule-trier.de rfttest@rz.hochschule-trier.de J.TEST@rz.fh-trier.de rfttest@rz.fh-trier.de rfttest@fh-trier.de rfttest@hochschule-trier.de
+  P7B:    rfttest@hochschule-trier.de rfttest@fh-trier.de J.TEST@rz.fh-trier.de rfttest@rz.hochschule-trier.de rfttest@rz.fh-trier.de
+
 ```
 
